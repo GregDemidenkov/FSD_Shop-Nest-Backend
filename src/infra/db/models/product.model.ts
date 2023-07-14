@@ -25,4 +25,4 @@ export class Product {
     count: number
 }
 
-export const ProductModal = SchemaFactory.createForClass(Product)
+export const ProductModel = SchemaFactory.createForClass(Product)

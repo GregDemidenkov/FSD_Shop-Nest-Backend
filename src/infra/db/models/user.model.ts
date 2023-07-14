@@ -16,4 +16,4 @@ export class User {
     password: string
 }
 
-export const UserModal = SchemaFactory.createForClass(User)
+export const UserModel = SchemaFactory.createForClass(User)

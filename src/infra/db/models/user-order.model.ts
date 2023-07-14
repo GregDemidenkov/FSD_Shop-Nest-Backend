@@ -18,4 +18,4 @@ export class UserOrder {
     check: number
 }
 
-export const UserOrderModal = SchemaFactory.createForClass(UserOrder)
+export const UserOrderModel = SchemaFactory.createForClass(UserOrder)

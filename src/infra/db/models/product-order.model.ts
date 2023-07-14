@@ -22,4 +22,4 @@ export class ProductOrder {
     full_price: number
 }
 
-export const ProductOrderModal = SchemaFactory.createForClass(ProductOrder)
+export const ProductOrderModel = SchemaFactory.createForClass(ProductOrder)
