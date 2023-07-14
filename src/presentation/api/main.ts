@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core'
 import { ConfigService } from '@nestjs/config'
 
 import { AppModule } from './app.module'
+import { HttpExceptionFilter } from './middleware/exceptions/exceptionFilter'
 
 
 export default async () => {
@@ -12,6 +13,7 @@ export default async () => {
     const prefix = configService.get<string>('dbBasePrefix')
 
     app.setGlobalPrefix(prefix)
+    app.useGlobalFilters(new HttpExceptionFilter());
 
     await app.listen(port)
 }

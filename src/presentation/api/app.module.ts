@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 
 import { ProductsModule } from './modules/product.module'
+import { AuthModule } from './modules/auth.module'
 
 import config from './config/config'
 
@@ -20,7 +21,8 @@ import config from './config/config'
             }),
             inject: [ConfigService],
         }),
-        ProductsModule
+        ProductsModule,
+        AuthModule
     ]
 })
 

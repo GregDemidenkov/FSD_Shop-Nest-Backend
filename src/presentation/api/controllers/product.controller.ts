@@ -1,6 +1,6 @@
-import { Controller, Get, HttpException, HttpStatus } from "@nestjs/common"
+import { Controller, Get } from "@nestjs/common"
 
-import { ProductService } from "src/core/services/product.service"
+import { ProductService } from "src/core/product/service/product.service"
 import { Product } from "src/infra/db/models/product.model"
 
 
