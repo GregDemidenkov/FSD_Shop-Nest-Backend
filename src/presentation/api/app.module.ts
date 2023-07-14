@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 
+import { ProductsModule } from './modules/product.module'
+
 import config from './config/config'
 
 
@@ -17,7 +19,8 @@ import config from './config/config'
                 uri: configService.get<string>('dbUrl'),
             }),
             inject: [ConfigService],
-        })
+        }),
+        ProductsModule
     ]
 })
 
