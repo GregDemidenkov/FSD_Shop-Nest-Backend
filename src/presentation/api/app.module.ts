@@ -6,6 +6,7 @@ import { ProductsModule } from './modules/product.module'
 import { AuthModule } from './modules/auth.module'
 
 import config from './config/config'
+import { UserOrderModule } from './modules/userOrder.module'
 
 
 @Module({
@@ -22,7 +23,8 @@ import config from './config/config'
             inject: [ConfigService],
         }),
         ProductsModule,
-        AuthModule
+        AuthModule,
+        UserOrderModule
     ]
 })
 

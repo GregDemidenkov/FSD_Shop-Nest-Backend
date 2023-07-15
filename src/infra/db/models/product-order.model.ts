@@ -1,19 +1,16 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
 import mongoose, { Document } from "mongoose"
 
-import { UserOrder } from "./user-order.model"
-import { Product } from "./product.model"
-
 
 export type ProductOrderDocument = ProductOrder & Document
 
-@Schema()
+@Schema({ collection: 'product_orders' })
 export class ProductOrder {
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'UserOrder' })
-    user_order_id: UserOrder
+    user_order_id: string
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Product' })
-    product_id: Product[]
+    product_id: string
 
     @Prop()
     count: number
