@@ -1,11 +1,10 @@
-import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common"
+import { Module } from "@nestjs/common"
 import { MongooseModule } from "@nestjs/mongoose"
 
 import { ProductController } from "../controllers/product.controller"
 import { ProductService } from "src/core/product/service/product.service"
 import { ProductDao } from "src/infra/db/dao/product.dao"
 import { Product, ProductModel } from "src/infra/db/models/product.model"
-import { AuthMiddleware } from "../middleware/auth/auth.middleware"
 
 
 @Module({
@@ -19,10 +18,4 @@ import { AuthMiddleware } from "../middleware/auth/auth.middleware"
 })
 
 
-export class ProductsModule implements NestModule {
-    public configure(consumer: MiddlewareConsumer) {
-        consumer
-          .apply(AuthMiddleware)
-          .forRoutes(ProductController);
-    }
-}
+export class ProductsModule {}

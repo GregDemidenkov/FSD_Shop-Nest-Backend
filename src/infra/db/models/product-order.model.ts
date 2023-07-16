@@ -10,7 +10,7 @@ export class ProductOrder {
     user_order_id: string
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Product' })
-    product_id: string
+    product_id: string | ProductOrderDocument
 
     @Prop()
     count: number

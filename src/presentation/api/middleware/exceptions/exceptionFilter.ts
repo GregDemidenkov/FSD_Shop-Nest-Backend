@@ -2,6 +2,7 @@ import { ExceptionFilter, Catch, ArgumentsHost, } from '@nestjs/common'
 import { Response } from 'express'
 
 import { Unauthorized } from 'src/core/common/exceptions/unauthorized'
+import { ProductCountExcess } from 'src/core/productOrder/exceptions/productCountExcess'
 import { UserAlreadyExist } from 'src/core/user/exceptions/userAlreadyExist'
 
 
@@ -21,6 +22,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
         } else if(exception instanceof Unauthorized) {
             message = exception.message
             status = 401
+        } else if (exception instanceof ProductCountExcess) {
+            message = exception.message
+            status = 400
         } else {
             message = "Internal serever error"
             status = 500

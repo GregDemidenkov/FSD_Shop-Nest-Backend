@@ -6,9 +6,7 @@ import { UserOrderDao } from "src/infra/db/dao/userOrder.dao"
 import { ProductOrderDao } from "src/infra/db/dao/productOrder.dao"
 import { ProductDao } from "src/infra/db/dao/product.dao"
 
-import { CreateProductOrderDto } from "src/core/productOrder/dto/createProductOrder.dto"
-import { AddProductOrderDto } from "../dto/addProductOrder.dto"
-import { CreateOrderDto } from "../dto/createOrder.dto"
+import { IdDto } from "src/core/common/dto/id.dto"
 
 
 @Injectable()
@@ -21,30 +19,18 @@ export class UserOrderService {
     ) {}
 
 
-    async createOrder(dto: CreateOrderDto): Promise<UserOrderDocument> {
-        const userId: string = dto.userId
-        const userOrder = await this.userOrderDao.createOrder(userId)
-        const userOrderId: string = userOrder.id
+    async getOrder(dto: IdDto): Promise<UserOrderDocument> {
+        return this.userOrderDao.getOrderByUserId(dto.id)
+    }
 
-        const product = await this.productDao.getById(dto.productOrder.id)
-        const fullPrice: number = dto.productOrder.count * product.price
+    async updateOrderStatus(dto: IdDto): Promise<UserOrderDocument> {
+        return this.userOrderDao.updateOrderStatus(dto.id)
+    }
 
-        const productOrderDto: CreateProductOrderDto = {
-            userOrderId: userOrderId,
-            productId: dto.productOrder.id,
-            count: dto.productOrder.count,
-            fullPrice: fullPrice
-        }
+    async deleteOrder(dto: IdDto) {
+        await this.userOrderDao.deleteById(dto.id)
 
-        const productOrder = await this.productOrderDao.createOrder(productOrderDto)
-
-        const addProductOrderDto: AddProductOrderDto = {
-            userOrderId: userOrderId,
-            productId: productOrder.id,
-            fullPrice: fullPrice
-        }
-
-        return this.userOrderDao.AddProductOrderId(addProductOrderDto)
+        await this.productOrderDao.deleteManyByUserOrderId(dto.id)
     }
     
 }

@@ -7,6 +7,8 @@ import { AuthModule } from './modules/auth.module'
 
 import config from './config/config'
 import { UserOrderModule } from './modules/userOrder.module'
+import { ProductOrderModule } from './modules/productOrder.module'
+import { UserModule } from './modules/user.module'
 
 
 @Module({
@@ -24,7 +26,9 @@ import { UserOrderModule } from './modules/userOrder.module'
         }),
         ProductsModule,
         AuthModule,
-        UserOrderModule
+        UserOrderModule,
+        ProductOrderModule,
+        UserModule
     ]
 })
 
