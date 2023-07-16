@@ -11,6 +11,10 @@ export class ProductOrderDao {
     constructor(@InjectModel(ProductOrder.name) private productOrderModel: Model<ProductOrderDocument>) {}
 
 
+    async findById(id: string) {
+        return this.productOrderModel.findById(id)
+    }
+
     async createProductOrder(dto: CreateProductOrderDto) {
         const productOrderModel: ProductOrder = {
             user_order_id: dto.userOrderId,
@@ -21,7 +25,7 @@ export class ProductOrderDao {
         return this.productOrderModel.create(productOrderModel)
     }
     
-    async getById(id: string): Promise<FullProductOrderDto> {
+    async getFullById(id: string): Promise<FullProductOrderDto> {
         const product = await this.productOrderModel.findById(id).populate('product_id').exec()
 
         return {

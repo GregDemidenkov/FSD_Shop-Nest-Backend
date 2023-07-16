@@ -7,6 +7,7 @@ import { ProductOrderDao } from "src/infra/db/dao/productOrder.dao"
 import { ProductDao } from "src/infra/db/dao/product.dao"
 
 import { IdDto } from "src/core/common/dto/id.dto"
+import { ProductCountExcess } from "src/core/productOrder/exceptions/productCountExcess"
 
 
 @Injectable()
@@ -24,6 +25,19 @@ export class UserOrderService {
     }
 
     async updateOrderStatus(dto: IdDto): Promise<UserOrderDocument> {
+        const userOrder = await this.userOrderDao.getOrderById(dto.id)
+
+        for(let id of userOrder.products) {
+            const productOrder = await this.productOrderDao.getFullById(id)
+            const product_id = productOrder.product.id
+
+            if(productOrder.count > productOrder.product.count) {
+                throw new ProductCountExcess("Not enough product in stock")
+            }
+
+            await this.productDao.updateCount(product_id, productOrder.count)
+        }
+
         return this.userOrderDao.updateOrderStatus(dto.id)
     }
 

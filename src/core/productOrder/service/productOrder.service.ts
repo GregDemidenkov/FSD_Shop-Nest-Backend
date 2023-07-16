@@ -71,7 +71,7 @@ export class ProductOrderService {
 
     async updateCountProductOrder(dto: ChangeCountProductOrderDto): Promise<ProductOrderDocument> {
         const action: string = dto.action
-        const productOrder: FullProductOrderDto = await this.productOrderDao.getById(dto.productOrderId)
+        const productOrder: FullProductOrderDto = await this.productOrderDao.getFullById(dto.productOrderId)
 
         if(action === "add") {
             if(dto.count > productOrder.product.count) {

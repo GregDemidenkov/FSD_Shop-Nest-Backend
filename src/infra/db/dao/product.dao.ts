@@ -15,5 +15,15 @@ export class ProductDao {
     async getAll(): Promise<Product[]> {
         return this.productModel.find().exec()
     }
+
+    async updateCount(id: string, count: number) {
+        const product = await this.productModel.findById(id)
+
+        product.count -= count
+
+        await product.save()
+
+        return product
+    }
     
 }
