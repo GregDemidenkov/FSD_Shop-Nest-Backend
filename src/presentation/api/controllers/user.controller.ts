@@ -1,8 +1,8 @@
 import { Controller, Get, Param } from "@nestjs/common"
 
-import { IdDto } from "src/core/common/dto/id.dto"
 import { UserService } from "src/core/user/service/user.service"
 
+import { IdDto } from "src/core/common/dto/id.dto"
 
 
 @Controller('user')

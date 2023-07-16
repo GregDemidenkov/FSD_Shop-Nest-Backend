@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common"
-import { IdDto } from "src/core/common/dto/id.dto"
 
 import { UserDao } from "src/infra/db/dao/user.dao"
+
+import { IdDto } from "src/core/common/dto/id.dto"
 import { UserShow } from "../dto/userShow.dto"
 
 

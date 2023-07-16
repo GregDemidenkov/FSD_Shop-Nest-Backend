@@ -56,7 +56,7 @@ export class AuthService {
                 name: user.name,
                 email: user.email
             }
-        }
+        } as AuthResponseDto
     }
 
     async checkAuth(dto: IdDto): Promise<AuthResponseDto> {
@@ -74,7 +74,7 @@ export class AuthService {
                 name: user.name,
                 email: user.email
             }
-        }
+        } as AuthResponseDto
     }
     
 }

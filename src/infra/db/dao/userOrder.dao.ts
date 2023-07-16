@@ -4,6 +4,7 @@ import { Model } from "mongoose"
 import { UserOrder, UserOrderDocument } from "../models/user-order.model"
 
 import { ChangeProductOrderDto } from "src/core/userOrder/dto/changeProductOrder.dto"
+import { UpdateCheckOrderDto } from "src/core/userOrder/dto/updateCheckOrder.dto"
 
 
 export class UserOrderDao {
@@ -43,13 +44,13 @@ export class UserOrderDao {
         return this.userOrderModel.findByIdAndUpdate(id, {status: 'closed'}, {new: true})
     }
 
-    async updateCheckOrder(id: string, fullPrice: number, action: string) {
-        const userOrder = await this.getOrderById(id)
+    async updateCheckOrder(dto: UpdateCheckOrderDto) {
+        const userOrder = await this.getOrderById(dto.userOrderId)
 
-        if(action === "add") {
-            userOrder.check += fullPrice
+        if(dto.action === "add") {
+            userOrder.check += dto.absFullPrice
         } else {
-            userOrder.check -= fullPrice
+            userOrder.check -= dto.absFullPrice
         }
 
         await userOrder.save()

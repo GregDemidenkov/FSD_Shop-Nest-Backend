@@ -9,9 +9,12 @@ import { AddProductDto } from "../dto/addProduct.dto"
 import { ChangeProductOrderDto } from "src/core/userOrder/dto/changeProductOrder.dto"
 import { ChangeCountProductOrderDto } from "../dto/changeCountProductOrder.dto"
 import { FullProductOrderDto } from "../dto/fullProductOrder.dto"
-import { ProductCountExcess } from "../exceptions/productCountExcess"
-import { ProductOrderDocument } from "src/infra/db/models/product-order.model"
 import { IdDto } from "src/core/common/dto/id.dto"
+import { UpdateCheckOrderDto } from "src/core/userOrder/dto/updateCheckOrder.dto"
+
+import { ProductCountExcess } from "../exceptions/productCountExcess"
+
+import { ProductOrderDocument } from "src/infra/db/models/product-order.model"
 
 
 @Injectable()
@@ -64,7 +67,13 @@ export class ProductOrderService {
 
         const absFullPrice = Math.abs((dto.count * productOrder.product.price) - productOrder.fullPrice)
 
-        await this.userOrderDao.updateCheckOrder(dto.userOrderId, absFullPrice, dto.action)
+        const updateCheckOrderDto: UpdateCheckOrderDto = {
+            userOrderId: dto.userOrderId,
+            absFullPrice: absFullPrice,
+            action: dto.action
+        }
+
+        await this.userOrderDao.updateCheckOrder(updateCheckOrderDto)
 
         return updatedProductOrder
     }
