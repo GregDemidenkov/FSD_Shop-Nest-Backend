@@ -1,4 +1,4 @@
-# FSD_Shop-Nest-Backend (in developing...)
+# FSD_Shop-Nest-Backend
 
 <br/>
 
