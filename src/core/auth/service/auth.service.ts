@@ -12,6 +12,8 @@ import { IdDto } from "src/core/common/dto/id.dto"
 import { InvalidPassword } from "src/core/user/exceptions/InvalidPassword"
 import { UserAlreadyExist } from "src/core/user/exceptions/userAlreadyExist"
 import { UserNotExist } from "src/core/user/exceptions/userNotExist"
+import { TokenDto } from "../dto/token.dto"
+import { LoginResponseDto } from "../dto/loginResponse.dto"
 
 
 @Injectable()
@@ -36,7 +38,7 @@ export class AuthService {
         return this.authDao.registration(dto)
     }
 
-    async login(dto: LoginDto): Promise<AuthResponseDto> {
+    async login(dto: LoginDto): Promise<LoginResponseDto> {
         const user = await this.authDao.findUserByEmail(dto.email)
         if (!user) {
             throw new UserNotExist("User with this email is not registered")
@@ -47,16 +49,18 @@ export class AuthService {
             throw new InvalidPassword("Invalid password")
         }
 
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "30m"})
+        const accessToken = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "30s"})
+        const refreshToken = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "30d"})
 
         return {
-            token,
+            accessToken,
+            refreshToken,
             user: {
                 id: user._id,
                 name: user.name,
                 email: user.email
             }
-        } as AuthResponseDto
+        } as LoginResponseDto
     }
 
     async checkAuth(dto: IdDto): Promise<AuthResponseDto> {
@@ -65,10 +69,31 @@ export class AuthService {
             throw new UserNotExist("User is not registered")
         }
 
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "30m"})
+        const accessToken = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "30s"})
 
         return {
-            token,
+            accessToken,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email
+            }
+        } as AuthResponseDto
+    }
+
+    async refreshToken(dto: TokenDto): Promise<AuthResponseDto> {
+        console.log(dto.token)
+        const decode: any = jwt.verify(dto.token, process.env.JWT_SECRET)
+
+        const user = await this.authDao.findUserById(decode.id)
+        if (!user) {
+            throw new UserNotExist("User is not registered")
+        }
+
+        const accessToken = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "30s"})
+
+        return {
+            accessToken,
             user: {
                 id: user._id,
                 name: user.name,

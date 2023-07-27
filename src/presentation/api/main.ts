@@ -6,7 +6,7 @@ import { HttpExceptionFilter } from './middleware/exceptions/exceptionFilter'
 
 
 export default async () => {
-    const app = await NestFactory.create(AppModule)
+    const app = await NestFactory.create(AppModule, { cors: true })
     const configService = app.get(ConfigService)
 
     const port = configService.get<number>('port')
