@@ -17,7 +17,14 @@ export class UserOrderDao {
     }
 
     async getOrderByUserId(id: string): Promise<UserOrderDocument> {
-        return this.userOrderModel.findOne({user_id: id, status: "pending"})
+        return this.userOrderModel
+        .findOne({user_id: id, status: "pending"})
+        .populate({
+            path : 'products',
+            populate : {
+                path : 'product_id'
+            }
+        })
     }
 
     async getOrderById(id: string): Promise<UserOrderDocument> {

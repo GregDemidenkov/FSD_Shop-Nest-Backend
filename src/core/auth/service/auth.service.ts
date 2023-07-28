@@ -49,7 +49,7 @@ export class AuthService {
             throw new InvalidPassword("Invalid password")
         }
 
-        const accessToken = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "30s"})
+        const accessToken = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "10m"})
         const refreshToken = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "30d"})
 
         return {
@@ -69,7 +69,7 @@ export class AuthService {
             throw new UserNotExist("User is not registered")
         }
 
-        const accessToken = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "30s"})
+        const accessToken = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "10m"})
 
         return {
             accessToken,
@@ -89,7 +89,7 @@ export class AuthService {
             throw new UserNotExist("User is not registered")
         }
 
-        const accessToken = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "30s"})
+        const accessToken = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "10m"})
 
         return {
             accessToken,
