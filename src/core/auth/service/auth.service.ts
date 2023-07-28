@@ -82,7 +82,6 @@ export class AuthService {
     }
 
     async refreshToken(dto: TokenDto): Promise<AuthResponseDto> {
-        console.log(dto.token)
         const decode: any = jwt.verify(dto.token, process.env.JWT_SECRET)
 
         const user = await this.authDao.findUserById(decode.id)
