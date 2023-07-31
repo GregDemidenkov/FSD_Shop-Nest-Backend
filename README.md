@@ -2,7 +2,7 @@
 
 <br/>
 
-### FSD_Shop-React-Frontend (in developing...)
+### FSD_Shop-React-Frontend ([https://github.com/GregDemidenkov/FSD_Shop-React-Frontend](https://github.com/GregDemidenkov/FSD_Shop-React-Frontend))
 
 ### FSD_Shop-Vue-Frontend (in developing...)
 
